@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -120,7 +121,7 @@ class _WeatherCardMainSection extends StatelessWidget {
               Text("${forecast['temperature']}°",
                   style: Theme.of(context).textTheme.bodyLarge),
               Row(children: [
-                const Icon(Icons.cloud),
+                const Icon(FontAwesomeIcons.cloudRain),
                 const SizedBox(width: 5),
                 Text('${forecast['probabilityOfPercipitation']}%',
                     style: Theme.of(context).textTheme.bodyMedium)
@@ -146,11 +147,42 @@ class _WeatherCardMainSection extends StatelessWidget {
             children: [
               Text("${forecast['windSpeed']} mph",
                   style: Theme.of(context).textTheme.bodyLarge),
-              Text("${forecast['windDirection']}",
-                  style: Theme.of(context).textTheme.bodyLarge),
+              WindDirectionPointer(direction: forecast['windDirection']),
             ],
           ),
         )
+      ],
+    );
+  }
+}
+
+class WindDirectionPointer extends StatelessWidget {
+  const WindDirectionPointer({
+    super.key,
+    required this.direction,
+  });
+
+  final String? direction;
+
+  @override
+  Widget build(BuildContext context) {
+    final directionIcon = switch (direction) {
+      "N" => FontAwesomeIcons.arrowUp,
+      "NE" => FontAwesomeIcons.arrowUp,
+      "E" => FontAwesomeIcons.arrowRight,
+      "SE" => FontAwesomeIcons.arrowDown,
+      "S" => FontAwesomeIcons.arrowDown,
+      "SW" => FontAwesomeIcons.arrowDown,
+      "W" => FontAwesomeIcons.arrowLeft,
+      "NW" => FontAwesomeIcons.arrowLeft,
+      _ => FontAwesomeIcons.question,
+    };
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(directionIcon, size: 15),
+        Text("$direction", style: Theme.of(context).textTheme.bodyLarge),
       ],
     );
   }
