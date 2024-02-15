@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:studio_6_layout_challenge/widgets/triangle.dart';
@@ -249,22 +251,24 @@ class WindDirectionPointer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final directionIcon = switch (direction) {
-      "N" => FontAwesomeIcons.arrowUp,
-      "NE" => FontAwesomeIcons.arrowUp,
-      "E" => FontAwesomeIcons.arrowRight,
-      "SE" => FontAwesomeIcons.arrowDown,
-      "S" => FontAwesomeIcons.arrowDown,
-      "SW" => FontAwesomeIcons.arrowDown,
-      "W" => FontAwesomeIcons.arrowLeft,
-      "NW" => FontAwesomeIcons.arrowLeft,
-      _ => FontAwesomeIcons.question,
+    final rotationAngle = switch (direction) {
+      "N" => 0.0,
+      "NE" => pi / 4,
+      "E" => pi / 2,
+      "SE" => 3 * pi / 4,
+      "S" => pi,
+      "SW" => 5 * pi / 4,
+      "W" => 3 * pi / 2,
+      "NW" => 7 * pi / 4,
+      _ => 0.0,
     };
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(directionIcon, size: 15),
+        Transform.rotate(
+            angle: rotationAngle,
+            child: const Icon(FontAwesomeIcons.arrowUp, size: 15)),
         Text("$direction", style: Theme.of(context).textTheme.bodyLarge),
       ],
     );
