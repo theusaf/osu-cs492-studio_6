@@ -87,50 +87,55 @@ class _WeatherForecastCard extends StatelessWidget {
               Text("${forecast['name']}'s forecast",
                   style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 10),
-              Flex(
-                direction: Axis.horizontal,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("${forecast['temperature']}°",
-                            style: Theme.of(context).textTheme.bodyLarge),
-                        Row(children: [
-                          const Icon(Icons.cloud),
-                          const SizedBox(width: 5),
-                          Text('${forecast['probabilityOfPercipitation']}%',
-                              style: Theme.of(context).textTheme.bodyMedium)
-                        ]),
-                      ],
+              Container(
+                constraints: const BoxConstraints(
+                  maxWidth: 500,
+                ),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("${forecast['temperature']}°",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          Row(children: [
+                            const Icon(Icons.cloud),
+                            const SizedBox(width: 5),
+                            Text('${forecast['probabilityOfPercipitation']}%',
+                                style: Theme.of(context).textTheme.bodyMedium)
+                          ]),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Expanded(
-                    flex: 3,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Placeholder(
-                          fallbackHeight: 200,
-                          fallbackWidth: 200,
-                        ),
-                      ],
+                    const Expanded(
+                      flex: 3,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Placeholder(
+                            fallbackHeight: 200,
+                            fallbackWidth: 200,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Text("${forecast['windSpeed']} mph",
-                            style: Theme.of(context).textTheme.bodyLarge),
-                        Text("${forecast['windDirection']}",
-                            style: Theme.of(context).textTheme.bodyLarge),
-                      ],
-                    ),
-                  )
-                ],
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Text("${forecast['windSpeed']} mph",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          Text("${forecast['windDirection']}",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               )
             ],
           ),
