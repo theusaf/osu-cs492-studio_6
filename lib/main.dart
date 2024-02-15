@@ -93,10 +93,68 @@ class _WeatherForecastCard extends StatelessWidget {
                   maxWidth: 500,
                 ),
                 child: _WeatherCardMainSection(forecast: forecast),
-              )
+              ),
+              const SizedBox(height: 10),
+              _ForecastStatusDisplay(forecast: forecast),
             ],
           ),
         ));
+  }
+}
+
+class _ForecastStatusDisplay extends StatefulWidget {
+  const _ForecastStatusDisplay({
+    required this.forecast,
+  });
+
+  final Map<String, String> forecast;
+
+  @override
+  State<_ForecastStatusDisplay> createState() => _ForecastStatusDisplayState();
+}
+
+class _ForecastStatusDisplayState extends State<_ForecastStatusDisplay> {
+  bool isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final shortForecast = GestureDetector(
+      onTap: () => setState(() => isExpanded = !isExpanded),
+      child: Text("${widget.forecast['shortForecast']}",
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                decoration: TextDecoration.underline,
+              )),
+    );
+    if (isExpanded) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              shortForecast,
+              Positioned(
+                top: 40,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding: EdgeInsets.all(4.0),
+                  child: Text("${widget.forecast['detailedForecast']}",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onSecondary,
+                          )),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    } else {
+      return shortForecast;
+    }
   }
 }
 
