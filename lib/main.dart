@@ -126,49 +126,60 @@ class _ForecastStatusDisplayState extends State<_ForecastStatusDisplay> {
                 decoration: TextDecoration.underline,
               )),
     );
-    if (isExpanded) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            clipBehavior: Clip.none,
-            children: [
-              shortForecast,
-              Positioned(
-                top: 30,
-                child: Column(
-                  children: [
-                    Triangle(
-                        size: const Size(20, 10),
-                        child: Container(
-                            color: Theme.of(context).colorScheme.secondary,
-                            padding: const EdgeInsets.all(4.0))),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondary,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text("${widget.forecast['detailedForecast']}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary,
-                              )),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            shortForecast,
+            Positioned(
+              top: 30,
+              child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 150),
+                  opacity: isExpanded ? 1 : 0,
+                  child: HoverDialog(
+                    child: Text("${widget.forecast['detailedForecast']}",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            )),
+                  )),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class HoverDialog extends StatelessWidget {
+  const HoverDialog({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Triangle(
+            size: const Size(20, 10),
+            child: Container(
+                color: Theme.of(context).colorScheme.secondary,
+                padding: const EdgeInsets.all(4.0))),
+        Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(5),
           ),
-        ],
-      );
-    } else {
-      return shortForecast;
-    }
+          padding: const EdgeInsets.all(4.0),
+          child: child,
+        ),
+      ],
+    );
   }
 }
 
