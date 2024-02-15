@@ -15,22 +15,17 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Weather App Demo'),
+      home: MyHomePage(title: 'Weather App Demo'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MyHomePage extends StatelessWidget {
+  MyHomePage({super.key, required this.title});
 
   final String title;
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  Map<String, String> forecast = {
+  final Map<String, String> forecast = {
     "name": "today",
     "temperature": "35",
     "shortForecast": "Snowy",
@@ -41,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "probabilityOfPercipitation": "100"
   };
 
-  Map<String, String> location = {
+  final Map<String, String> location = {
     "city": "Bend",
     "state": "Oregon",
     "zip": "97702"
@@ -53,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Center(
-            child: Text(widget.title,
+            child: Text(title,
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
@@ -63,21 +58,32 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text("Weather for ",
-                    style: Theme.of(context).textTheme.headlineSmall),
-                Text(
-                    "${location['city']}, ${location['state']} ${location['zip']}",
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          decoration: TextDecoration.underline,
-                        )),
-              ]),
-            ),
+            _LocationTitle(location: location),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _LocationTitle extends StatelessWidget {
+  const _LocationTitle({
+    required this.location,
+  });
+
+  final Map<String, String> location;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text("Weather for ", style: Theme.of(context).textTheme.headlineSmall),
+        Text("${location['city']}, ${location['state']} ${location['zip']}",
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  decoration: TextDecoration.underline,
+                )),
+      ]),
     );
   }
 }
