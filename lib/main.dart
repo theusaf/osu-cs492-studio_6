@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:studio_6_layout_challenge/widgets/triangle.dart';
 
 void main() {
   runApp(const MyApp());
@@ -135,17 +136,30 @@ class _ForecastStatusDisplayState extends State<_ForecastStatusDisplay> {
             children: [
               shortForecast,
               Positioned(
-                top: 40,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  padding: EdgeInsets.all(4.0),
-                  child: Text("${widget.forecast['detailedForecast']}",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          )),
+                top: 30,
+                child: Column(
+                  children: [
+                    Triangle(
+                        size: const Size(20, 10),
+                        child: Container(
+                            color: Theme.of(context).colorScheme.secondary,
+                            padding: const EdgeInsets.all(4.0))),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text("${widget.forecast['detailedForecast']}",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
+                              )),
+                    ),
+                  ],
                 ),
               ),
             ],
